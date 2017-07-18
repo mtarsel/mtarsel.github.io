@@ -1,2 +1,4 @@
 name: Mick Tarsel, IBM
 markdown: kramdown
+gems:
+  - jekyll-sitemap
