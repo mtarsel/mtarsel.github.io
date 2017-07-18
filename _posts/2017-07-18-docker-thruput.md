@@ -38,7 +38,7 @@ For this specific type of experiment you could measure the throughput of the lo 
 
 # lo: 24.38 GB/s
 
-# default Bridge Network
+## default Bridge Network
 ### IPv4: 2.23 GB/sec
 ### IPv6: 2.65 GB/sec
 ### IPv4 no iptables:  6.81Gb/s
@@ -61,7 +61,7 @@ The bridge network shown above does provide a way for the container to communica
 
 The 2 networks described below do not give the containers access from another network; there is no communication with the outside world. There is no NAT table that a bridge provides because there is no bridge. You will still need to add another interface inside container or add the container to another network which does have some kind of bridge.
 
-# Container to Container via veth Pair
+## Container to Container via veth Pair
 ### IPv4: 2.49 GB/sec 
 ### IPv6: 2.91 GB/sec
 ### IPv4 no iptables: 4.97GB/s
@@ -75,9 +75,9 @@ Instead of connecting a container to a bridge via a veth pair, we can connect 2 
 <li> packets will travel through kernel networking stack </li>
 <li> still need IP address for containers because they are in separate network namespaces</li>
 <li> Not a docker command  https://github.com/mtarsel/link-containers/blob/master/tunneler.sh </li>
+</ul>
 
-
-# Shared Network Namespace
+## Shared Network Namespace
 ### IPv4: 2.23 GB/sec
 ### IPv6: 2.65 GB/sec
 
@@ -85,6 +85,7 @@ Instead of connecting a container to a bridge via a veth pair, we can connect 2 
 
 Pass the - -net=container:your_container1 option to docker run command
 Two containers have the same virtual Ethernet interfaces. Similar to the host network however the 2 containers do not have any physical interfaces because the containers network interfaces exist in a separate namespace from the node.
+
 <ul>
 <li>fastest throughput</li>
 <li>very easy to setup</li>
