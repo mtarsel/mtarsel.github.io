@@ -43,7 +43,7 @@ For this specific type of experiment you could measure the throughput of the lo 
 ### IPv6: 2.65 GB/sec
 ### IPv4 no iptables:  6.81Gb/s
 
-![bridge](docker-bridge.png)
+![bridge](/docker-bridge.png)
 
 2 containers communicating with a Linux bridge in between them. This means there are 2 veth pairs with 1 side of the pair connected to a Linux bridge and the other side connected to the container. The containers exist in their own separate network namespaces which is why they have different IP addresses. 
 
@@ -67,7 +67,7 @@ The 2 networks described below do not give the containers access from another ne
 ### IPv6: 2.91 GB/sec
 ### IPv4 no iptables: 4.97GB/s
 
- ![veth](veth-docker.png)
+ ![veth](/veth-docker.png)
 
 Instead of connecting a container to a bridge via a veth pair, we can connect 2 containers together the same way except with no bridge. 
 <ul>
@@ -81,7 +81,7 @@ Instead of connecting a container to a bridge via a veth pair, we can connect 2 
 ### IPv4: 2.23 GB/sec
 ### IPv6: 2.65 GB/sec
 
-![shared](shared-ns.png)
+![shared](/shared-ns.png)
 
 Pass the - -net=container:your_container1 option to docker run command
 Two containers have the same virtual Ethernet interfaces. Similar to the host network however the 2 containers do not have any physical interfaces because the containers network interfaces exist in a separate namespace from the node.
