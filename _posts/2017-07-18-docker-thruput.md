@@ -7,7 +7,7 @@ date: 2017-07-18
 
 This post is focused on network throughput performance of Docker containers existing on the same physical machine, one node. I will briefly mention how these networks work and show how these containers can communicate with each other. I will provide my average throughput results for both my IPv4 and IPv6 tests as well as some insight into how these configurations will scale when running many thousands of containers on 1 single node.
 
-First of all, here is the machine information I ran my tests on using docker info command:
+First of all, here is the machine information I ran my tests on using ```docker info command```:
 
 <pre><code>
 Docker Version: 1.12.1
