@@ -30,11 +30,9 @@ CPUs: 20
 Total Memory: 251.2 GiB
 </code></pre>
 
- I will provide a very short description about each network setup however I am mostly focused on which network will give you the best throughput (or bandwidth) for containers communicating with each other on a single physical node. Lets first describe the bridge network.
- 
 My results are the average of 10 netperf tests. Netperf ran for 5 minutes continually sending traffic to a specific IP address and port.
 
-For this specific type of experiment you could measure the throughput of the lo interface on your node and compare your results from the container tests. This is a good test because it avoids *most* of the kernel networking stack.
+For this specific type of experiment you could measure the throughput of the lo interface on your node and compare your results from the container tests. This is a good test because it avoids *most* of the kernel networking stack. Lets first describe the bridge network.
 
 # lo: 24.38 GB/s
 
@@ -45,7 +43,7 @@ For this specific type of experiment you could measure the throughput of the lo 
 
 ![bridge](/docker-bridge.png)
 
-2 containers communicating with a Linux bridge in between them. This means there are 2 veth pairs with 1 side of the pair connected to a Linux bridge and the other side connected to the container. The containers exist in their own separate network namespaces which is why they have different IP addresses. 
+2 containers communicating with a Linux bridge in between them. This means there are 2 veth (Virtual Ethernet) pairs with 1 side of the pair connected to a Linux bridge and the other side connected to the container. The containers exist in their own separate network namespaces which is why they have different IP addresses. 
 
 This setup script may be helpful to some: https://github.com/mtarsel/link-containers/blob/master/bridge-it.sh
 
@@ -56,11 +54,11 @@ Features and Notes:
 <li>different options for bridge type</li>
 </ul>
 
-The NAT is handled  by iptables. Running the same test again with iptables off shows:
+The NAT is handled by ```iptables```. 
 
 The bridge network shown above does provide a way for the container to communicate with an outside network. The iptables can route traffic in and out with certain rules which I will not outline here.
 
-The 2 networks described below do not give the containers access from another network; there is no communication with the outside world. There is no NAT table that a bridge provides because there is no bridge. You will still need to add another interface inside container or add the container to another network which does have some kind of bridge.
+The 2 networks described below do not give the containers access from another network; There is no communication with the outside world. There is no NAT table that a bridge provides because *there is no bridge*. 
 
 ## Container to Container via veth Pair
 ### IPv4: 2.49 GB/sec 
@@ -78,16 +76,25 @@ Instead of connecting a container to a bridge via a veth pair, we can connect 2 
 </ul>
 
 ## Shared Network Namespace
-### IPv4: 2.23 GB/sec
-### IPv6: 2.65 GB/sec
+### IPv4: 22.45 GB/sec
+### IPv6: 21.46 GB/sec
 
 ![shared](/shared-ns.png)
 
 Pass the - -net=container:your_container1 option to docker run command
-Two containers have the same virtual Ethernet interfaces. Similar to the host network however the 2 containers do not have any physical interfaces because the containers network interfaces exist in a separate namespace from the node.
+The veth interface exists in the network namespace. The namespace is shared by both containers so the two containers have the same veth interface - which means they have the same IP address. 
 
 <ul>
 <li>fastest throughput</li>
 <li>very easy to setup</li>
 <li>containers have the same IP address</li>
 </ul>
+
+Thanks for reading!
+
+Here is a summary of the results (GB/sec):
+| lo = 24.38 | IPv4 | IPv6 | IPv4 no iptables|
+| --------- | --------- | --------- | ---------|
+| docker0 Bridge | 2.23 | 2.65 | 6.81|
+| veth pair | 2.49 | 2.91 | 4.97|
+| Shared NS | 22.45 | 21.46|
