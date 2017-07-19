@@ -92,7 +92,8 @@ The veth interface exists in the network namespace. The namespace is shared by b
 
 Thanks for reading!
 
-Here is a summary of the results (GB/sec):
+Here is a summary of the results (GB/sec)
+
 | lo = 24.38 | IPv4 | IPv6 | IPv4 no iptables|
 | --------- | --------- | --------- | ---------|
 | docker0 Bridge | 2.23 | 2.65 | 6.81|
