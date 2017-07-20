@@ -54,7 +54,7 @@ Features and Notes:
 <li>different options for bridge type</li>
 </ul>
 
-The NAT is handled by ```iptables```. 
+The NAT is handled by ```ebtables``` and ```iptables```. 
 
 The bridge network shown above does provide a way for the container to communicate with an outside network. The iptables can route traffic in and out with certain rules which I will not outline here.
 
