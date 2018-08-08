@@ -2,9 +2,14 @@
 layout: default
 title: Mick's Docker Stuff
 ---
+
+  {% for post in site.posts %}
+	    <li><span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
+	  {% endfor %}
+</ul>
     		<div class="blurb">
         		<h1>Docker Research</h1>
 				<p><a href="https://developer.ibm.com/linuxonpower/2016/12/02/network-scaling-experiments-on-docker-with-power-systems/">Scaling  </a> a network with thousands of containers on a single physical machine.</p>
-							<p><a href="https://github.com/mtarsel/link-containers">Scripts  </a> to connect containers together.</p>
+				<p><a href="https://github.com/mtarsel/link-containers">Scripts  </a> to connect containers together.</p>
 
     		</div><!-- /.blurb -->
